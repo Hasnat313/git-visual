@@ -1,0 +1,38 @@
+.UserPosts {
+  padding: 2.5rem 0;
+
+  .post_card {
+    background: #222222;
+    border-radius: 10px;
+    // height: 135px;
+    padding: 20px;
+  }
+
+  .cards_group {
+    padding: 0 150px;
+  }
+
+  .circle {
+    width: 45px;
+    height: auto;
+    border-radius: 75px;
+  }
+}
+
+@media screen and (min-width: 426px) and (max-width: 786px) {
+  .UserPosts {
+    .cards_group {
+      padding: 0 50px !important;
+    }
+    margin-bottom: 30px;
+  }
+}
+
+@media screen and (min-width: 100px) and (max-width: 425px) {
+  .UserPosts {
+    .cards_group {
+      padding: 0 40px !important;
+    }
+    margin-bottom: 30px;
+  }
+}

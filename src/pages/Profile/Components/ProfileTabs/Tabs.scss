@@ -1,0 +1,45 @@
+// TABs
+.profile-tabs {
+  .ant-tabs-nav {
+
+    .ant-tabs-nav-list {
+      .ant-tabs-tab-btn {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 22px;
+        color: #000000;
+      }
+
+      .ant-tabs-tab {
+
+        &-active {
+          position: relative;
+          //  height: 0px;
+
+          .ant-tabs-tab-btn {
+            font-weight: 700;
+            line-height: 22px;
+            color: #144B7E;
+            position: relative;
+          }
+
+          &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(180deg, #2A4884 0%, #144B7E 37.5%, #136497 72.92%, #1387B8 100%);
+          }
+        }
+      }
+
+      .ant-tabs-ink-bar {
+        display: none !important;
+
+        .ant-tabs-ink-bar-animated {}
+      }
+    }
+  }
+}
