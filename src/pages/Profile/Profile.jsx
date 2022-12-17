@@ -1,16 +1,18 @@
-import { Avatar, Button, Card, Col, FloatButton, Grid, Image, Row, Space, Typography, Dropdown } from "antd";
+import { Avatar, Button, Card, Col, FloatButton, Grid, Image, Row, Space, Typography, Dropdown, Divider, List, Popover } from "antd";
 import { Link } from "react-router-dom";
 import { profile } from "../../utils/data";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { BiLocationPlus } from "react-icons/bi";
 import { BsChat } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
-
+import VirtualList from "rc-virtual-list";
+import { useState, useEffect } from "react";
 import avatar from "./Assets/avatar.jpg";
 // import Banner from "./../../components/Banner/Banner";
 import ProfileTabs from "./Components/ProfileTabs/ProfileTabs";
 import "./Profile.scss";
-import { MenuProps } from "antd";
+import { MenuProps, message } from "antd";
+import { Co } from "react-flags-select";
 const { Meta } = Card;
 const { Text, Title } = Typography;
 
@@ -19,26 +21,50 @@ const { useBreakpoint } = Grid;
 export default function Profile() {
 	const userProfile = profile();
 	const screens = useBreakpoint();
-	const items = [
-		{
-			key: "1",
-			label: (
-				<Typography style={{ cursor: "default" }}>
-					Followers {"  "}
-					{userProfile?.followers}
-				</Typography>
-			),
-		},
-		{
-			key: "2",
-			label: (
-				<Typography style={{ cursor: "default" }}>
-					Following {"  "}
-					{userProfile?.following}
-				</Typography>
-			),
-		},
-	];
+
+	const fakeDataUrl = "https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo";
+	const ContainerHeight = 400;
+	const [data, setData] = useState([]);
+	const appendData = () => {
+		fetch(fakeDataUrl)
+			.then((res) => res.json())
+			.then((body) => {
+				setData(data.concat(body.results));
+				message.success(`${body.results.length} more items loaded!`);
+			});
+	};
+	useEffect(() => {
+		appendData();
+	}, []);
+	const onScroll = (e) => {
+		if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === ContainerHeight) {
+			appendData();
+		}
+	};
+	const content = (
+		<List style={{ width: "500px" }}>
+			<VirtualList data={data} height={ContainerHeight} itemHeight={47} itemKey="email" onScroll={onScroll}>
+				{(item) => (
+					<List.Item key={item.email} style={{ cursor: "pointer" }}>
+						<List.Item.Meta avatar={<Avatar src={item.picture.large} />} title={<a href="#">{item.name.last}</a>} description={item.email} />
+						<div style={{ border: "1px solid black", width: "120px", textAlign: "center", padding: "3px", borderRadius: "20px" }}>Followers</div>
+					</List.Item>
+				)}
+			</VirtualList>
+		</List>
+	);
+	const content2 = (
+		<List style={{ width: "500px" }}>
+			<VirtualList data={data} height={ContainerHeight} itemHeight={47} itemKey="email" onScroll={onScroll}>
+				{(item) => (
+					<List.Item key={item.email} style={{ cursor: "pointer" }}>
+						<List.Item.Meta avatar={<Avatar src={item.picture.large} />} title={<a href="#">{item.name.last}</a>} description={item.email} />
+						<div style={{ border: "1px solid black", width: "120px", textAlign: "center", padding: "3px", borderRadius: "20px" }}>Follwing</div>
+					</List.Item>
+				)}
+			</VirtualList>
+		</List>
+	);
 
 	return (
 		<section span={24} className="Profile">
@@ -128,27 +154,27 @@ export default function Profile() {
 
 								<Space direction="horizontal" style={{ textAlign: "center" }} size="large">
 									<Col>
-										<Dropdown menu={{ items }} style={{ cursor: "default" }}>
-											<Space style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-												<Title level={4} strong style={{ margin: 0 }}>
-													{userProfile?.posts}
-												</Title>
-												<Text type="secondary">Posts</Text>
-											</Space>
-										</Dropdown>
-									</Col>
-									{/* <Col>
 										<Title level={4} strong style={{ margin: 0 }}>
-											{userProfile?.followers}
+											{userProfile?.posts}
 										</Title>
-										<Text type="secondary">Followers</Text>
+										<Text type="secondary">Posts</Text>
 									</Col>
-									<Col>
-										<Title level={4} strong style={{ margin: 0 }}>
-											{userProfile?.following}
-										</Title>
-										<Text type="secondary">Following</Text>
-									</Col> */}
+									<Popover placement="bottomRight" content={content} title="Followers">
+										<Col style={{ cursor: "pointer" }}>
+											<Title level={4} strong style={{ margin: 0 }}>
+												{userProfile?.followers}
+											</Title>
+											<Text type="secondary">Followers</Text>
+										</Col>
+									</Popover>
+									<Popover placement="bottomRight" content={content2} style={{ width: "1000px !important" }} title="Following">
+										<Col style={{ cursor: "pointer" }}>
+											<Title level={4} strong style={{ margin: 0 }}>
+												{userProfile?.following}
+											</Title>
+											<Text type="secondary">Following</Text>
+										</Col>
+									</Popover>
 								</Space>
 							</Space>
 						</Col>

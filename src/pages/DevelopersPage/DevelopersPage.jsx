@@ -171,25 +171,14 @@ export default function DevelopersPage() {
 										/>
 									</Col>
 									<Col>
-										<Typography.Title level={5}>Code with</Typography.Title>
-										<Input
-											style={{ padding: "7.5px" }}
-											suffix={
-												<Tooltip title="Extra information">
-													<InfoCircleOutlined
-														style={{
-															color: "rgba(0,0,0,.45)",
-														}}
-													/>
-												</Tooltip>
-											}
-										/>
+										<Typography.Title level={5}>Coded with</Typography.Title>
+										<Input style={{ padding: "7.5px" }} />
 									</Col>
 								</Space>
 							</Row>
 						</Col>
 
-						<Row style={{ overflow: "hidden", width: "100%", ...(mediaMatch.matches && { width: "85%" }), margin: "auto" }} gutter={[30, 20]}>
+						<Row style={{ width: "100%", margin: "auto", ...(mediaMatch.matches && { width: "85%" }) }} gutter={[30, 30]}>
 							{projects.map((project, key) => {
 								return (
 									<Col key={key} xl={{ span: 6 }} lg={{ span: 6 }} md={{ span: 12 }} sm={{ span: 12 }} xs={{ span: 24 }}>

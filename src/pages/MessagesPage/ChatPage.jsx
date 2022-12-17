@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 
-import "./ChatPage.scss";
+import "./ChatPage.Module.scss";
 import MsgIcon from "./img/msg.svg";
 import MessagesItem from "./Components/MessageItem/MessagesItem";
 import UserItem from "./Components/UserItem/UserItem";

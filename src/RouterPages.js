@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Helmet } from 'react-helmet';
 
 // import { useAuthentication } from "./Hooks/useAuthentication";
@@ -30,12 +30,13 @@ import SignUp from "./pages/Auth/SignUp/SignUp";
 import SkillsPage from "./pages/SkillsPage/SkillsPage";
 import SuccessPage from "./pages/SuccessPage/SuccessPage";
 import UserPosts from "./pages/UserPosts/UserPosts";
-
+import { useMediaQuery } from "react-responsive";
 import { Route, Routes } from "react-router-dom";
 
 function RouterPages() {
-
-  useEffect(() => { }, []);
+  const matches = useMediaQuery({
+    query: '(max-width: 400px)'
+  })
 
   return (
     <>
@@ -131,9 +132,17 @@ function RouterPages() {
               </DefaultLayout>
             } />
             <Route path="/chat" element={
-              <NoFooterLayout>
-                <ChatPage />
-              </NoFooterLayout>
+
+              matches ?
+                <NoFooterLayout>
+                  <MessagesPage />
+                </NoFooterLayout> :
+                <NoFooterLayout>
+                  <ChatPage />
+                </NoFooterLayout>
+
+
+
             } />
 
             <Route path="/auth/login" element={

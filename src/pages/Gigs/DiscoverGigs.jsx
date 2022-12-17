@@ -1,6 +1,6 @@
 // import { profile } from "../../utils/data";
 import { ArrowRightOutlined, SearchOutlined } from "@ant-design/icons";
-import { Checkbox, Col, Collapse, Input, Radio, Row, Space, Typography } from "antd";
+import { Checkbox, Col, Collapse, Input, Radio, Row, Select, Space, Typography } from "antd";
 import { Link } from "react-router-dom";
 
 import JobCard from "./Components/JobCard";
@@ -20,7 +20,18 @@ export default function DiscoverGigs() {
 	const onSearch = (value) => {
 		console.log(value);
 	};
-
+	const Exp = [
+		{ value: 1, label: "Exp1" },
+		{ value: 2, label: "Exp2" },
+	];
+	const Ind = [
+		{ value: 1, label: "Ind1" },
+		{ value: 2, label: "Ind2" },
+	];
+	const Tag = [
+		{ value: 1, label: "Tag1" },
+		{ value: 2, label: "Tag2" },
+	];
 	return (
 		<Col span={24} className={css["DiscoverGigs"]}>
 			<Row gutter={[0, { xs: 40, sm: 40, md: 60, lg: 70 }]} style={{ overflow: "hidden", width: "100%" }} justify="center">
@@ -145,8 +156,19 @@ export default function DiscoverGigs() {
 									key="3"
 								>
 									<Space direction="vertical" size="middle" style={{ width: "100%" }}>
-										<Input className={css["filter__input"]} placeholder="Expertise 1" />
-										<Input className={css["filter__input"]} placeholder="Expertise 2" />
+										<Select
+											mode="tags"
+											size="large"
+											placeholder="Please select"
+											//   onChange={handleChange}
+											style={{
+												minWidth: 220,
+												background: "black",
+												color: "black",
+											}}
+											className={css["filter__input"]}
+											options={Exp}
+										/>
 									</Space>
 									{/* <Checkbox.Group
 										className={css["filter__checkboxes"]}
@@ -164,8 +186,19 @@ export default function DiscoverGigs() {
 									key="4"
 								>
 									<Space direction="vertical" size="middle" style={{ width: "100%" }}>
-										<Input className={css["filter__input"]} placeholder="Industry 1" />
-										<Input className={css["filter__input"]} placeholder="Industry 2" />
+										<Select
+											mode="tags"
+											size="large"
+											placeholder="Please select"
+											//   onChange={handleChange}
+											style={{
+												minWidth: 220,
+												background: "black",
+												color: "black",
+											}}
+											className={css["filter__input"]}
+											options={Ind}
+										/>
 									</Space>
 								</Panel>
 								<Panel
@@ -178,8 +211,19 @@ export default function DiscoverGigs() {
 									key="5"
 								>
 									<Space direction="vertical" size="middle" style={{ width: "100%" }}>
-										<Input className={css["filter__input"]} placeholder="Tag 1" />
-										<Input className={css["filter__input"]} placeholder="Tag 2" />
+										<Select
+											mode="tags"
+											size="large"
+											placeholder="Please select"
+											//   onChange={handleChange}
+											style={{
+												minWidth: 220,
+												background: "black",
+												color: "black",
+												padding: "1px 1px",
+											}}
+											options={Tag}
+										/>
 									</Space>
 								</Panel>
 							</Collapse>

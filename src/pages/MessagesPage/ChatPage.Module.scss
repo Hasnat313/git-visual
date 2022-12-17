@@ -277,7 +277,10 @@
   @media (min-width: 1400px) {}
 }
 
-.chat-layout {}
+.chat-layout {
+
+  
+}
 
 .ant-badge-count {
   border: 0;
@@ -364,7 +367,7 @@
 
   // Small devices (landscape phones, 576px and up)
   @media (min-width: 576px) {
-    display: none;
+    display: block;
   }
 
   // Medium devices (tablets, 768px and up)
