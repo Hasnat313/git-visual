@@ -161,7 +161,6 @@ export default function DevelopersPage() {
 										<Select
 											mode="tags"
 											size="large"
-											placeholder="Please select"
 											defaultValue={["Web", "React"]}
 											//   onChange={handleChange}
 											style={{
@@ -172,7 +171,14 @@ export default function DevelopersPage() {
 									</Col>
 									<Col>
 										<Typography.Title level={5}>Coded with</Typography.Title>
-										<Input style={{ padding: "7.5px" }} />
+										<Select
+											size="large"
+											//   onChange={handleChange}
+											style={{
+												minWidth: 220,
+											}}
+											options={codingLanguages}
+										/>
 									</Col>
 								</Space>
 							</Row>

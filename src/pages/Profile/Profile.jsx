@@ -59,7 +59,7 @@ export default function Profile() {
 				{(item) => (
 					<List.Item key={item.email} style={{ cursor: "pointer" }}>
 						<List.Item.Meta avatar={<Avatar src={item.picture.large} />} title={<a href="#">{item.name.last}</a>} description={item.email} />
-						<div style={{ border: "1px solid black", width: "120px", textAlign: "center", padding: "3px", borderRadius: "20px" }}>Follwing</div>
+						<div style={{ border: "1px solid black", width: "120px", textAlign: "center", padding: "3px", borderRadius: "20px" }}>Following</div>
 					</List.Item>
 				)}
 			</VirtualList>
