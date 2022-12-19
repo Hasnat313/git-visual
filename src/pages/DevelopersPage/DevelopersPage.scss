@@ -1,11 +1,14 @@
 .DevelopersPage {
-
+  textAlign:center;
+    margin:auto;
+    width: 90%;
   @media screen and (min-width: 100px) and (max-width: 426px) {
     padding: 10px !important;
   }
 
   @media screen and (min-width: 426px) and (max-width: 1024px) {
-    padding: 60px 30px !important;
+    padding: 0px 0px !important;
+  
   }
 
   .title {
@@ -38,6 +41,7 @@
 .load-posts-wrapper {
   display: flex;
   justify-content: center;
+
 }
 
 .load-posts {

@@ -32,7 +32,7 @@ export default function MessagesPage() {
 								<div
 									id="scrollableDiv"
 									style={{
-										height: 326,
+										height: 550,
 										overflow: "auto",
 									}}
 								>

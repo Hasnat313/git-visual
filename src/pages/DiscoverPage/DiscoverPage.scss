@@ -1,5 +1,7 @@
 .DiscoverPage {
-
+  textAlign:center;
+  margin:auto;
+  width: 90%;
   @media screen and (min-width: 100px) and (max-width: 426px) {
     padding: 10px !important;
   }

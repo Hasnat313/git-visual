@@ -19,6 +19,28 @@
   }
 }
 
+element.style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:where(.css-dev-only-do-not-override-1i536d8)[class^="ant-col"] [class^="ant-col"], :where(.css-dev-only-do-not-override-1i536d8)[class*=" ant-col"] [class^="ant-col"], :where(.css-dev-only-do-not-override-1i536d8)[class^="ant-col"] [class*=" ant-col"], :where(.css-dev-only-do-not-override-1i536d8)[class*=" ant-col"] [class*=" ant-col"] {
+  box-sizing: border-box;
+}
+.ant-col-1 {
+  max-width: "15% !important";
+}
+
+:where(.css-dev-only-do-not-override-1i536d8).ant-col-1 {
+  display: block;
+  flex: 0 0 4.166666666666666%;
+  max-width: 38.166667%;
+}
+
+
+
+
 @media screen and (min-width: 426px) and (max-width: 786px) {
   .UserPosts {
     .cards_group {

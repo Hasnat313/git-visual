@@ -41,12 +41,18 @@ export default function DiscoverPage() {
 			style={{
 				paddingTop: "5rem",
 				paddingBottom: "5rem",
-				paddingLeft: "5rem",
-				paddingRight: "5rem",
+				paddingLeft: "1rem",
+				paddingRight: "0rem",
 			}}
 		>
 			<Row gutter={[0, 70]} style={{ overflow: "hidden", width: "100%" }}>
-				<Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
+				<Col
+				style={{padding:"0rem 5rem"}}
+				 xs={{ span: 24 }} 
+				sm={{ span: 24 }} 
+				md={{ span: 24 }}
+				lg={{ span: 24 }}
+				xl={{ span: 24 }}>
 					<Radio.Group
 						defaultValue="a"
 						className="radio"
@@ -54,6 +60,7 @@ export default function DiscoverPage() {
 							gap: "20px",
 							display: "flex",
 							flexWrap: "wrap",
+							
 							justifyContent: "space-evenly",
 						}}
 					>

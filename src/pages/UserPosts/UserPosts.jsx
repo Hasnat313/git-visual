@@ -5,13 +5,16 @@ import { Link } from "react-router-dom";
 import "./UserPosts.scss";
 import { BiLocationPlus } from "react-icons/bi";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-
+import { useMediaQuery } from "react-responsive";
 import JobCard from "./Components/JobCard";
 import user from "../../assets/Profile Images/profile_pic.png";
 
 const { Text, Title } = Typography;
 
 export default function UserPosts() {
+	const isMobile = useMediaQuery({
+		query: "(max-width: 450px)",
+	  });
 	return (
 		<section className="UserPosts">
 			<Row
@@ -28,15 +31,16 @@ export default function UserPosts() {
 					<Row
 						style={{
 							width: "100%",
-							overflow: "hidden",
+							
 							textAlign: "center",
 							justifyContent: "center",
 							marginBottom: 10,
 							marginLeft: 30,
+				
 						}}
 					>
 						<Col span={12} style={{ textAlign: "center" }}>
-							<Title level={1} style={{ fontWeight: "700", margin: 5 }}>
+							<Title level={1} style={{ fontWeight: "700", margin: 1 }}>
 								Your Postings
 							</Title>
 							<Title level={4} style={{ margin: 0 }} strong>
@@ -46,7 +50,7 @@ export default function UserPosts() {
 							<br />
 						</Col>
 
-						<Col span={1} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+						<Col span={1} style={{display: "flex", justifyContent: "center", alignItems: "center", width:"100px !important" }}>
 							<Popover
 								placement="bottom"
 								title={
@@ -64,8 +68,9 @@ export default function UserPosts() {
 							>
 								<FloatButton
 									icon={<QuestionCircleOutlined />}
-									type="default"
+									
 									style={{
+										width:"100px !important",
 										right: 24,
 
 										position: "initial",

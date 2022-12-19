@@ -43,8 +43,8 @@ export default function DevelopersPage() {
 			style={{
 				paddingTop: "5rem",
 				paddingBottom: "5rem",
-				paddingRight: "5rem",
-				paddingLeft: "5rem",
+				paddingRight: "0rem",
+				paddingLeft: "2rem",
 			}}
 		>
 			<Row gutter={[0, 70]} style={{ overflow: "hidden", width: "100%" }}>
@@ -52,6 +52,7 @@ export default function DevelopersPage() {
 					span={24}
 					style={{
 						textAlign: "center",
+						
 					}}
 				>
 					<Col span={24}>
@@ -68,7 +69,8 @@ export default function DevelopersPage() {
 				</Col>
 
 				<Col span={24}>
-					<Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}>
+					<Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}
+					style={{padding:"0rem 5rem"}}>
 						<Radio.Group
 							defaultValue="a"
 							className="radio"
@@ -184,7 +186,7 @@ export default function DevelopersPage() {
 							</Row>
 						</Col>
 
-						<Row style={{ width: "100%", margin: "auto", ...(mediaMatch.matches && { width: "85%" }) }} gutter={[30, 30]}>
+						<Row style={{ width: "100%", margin: "auto", ...(mediaMatch.matches && { width: "85%" }) }} gutter={[30, 40]}>
 							{projects.map((project, key) => {
 								return (
 									<Col key={key} xl={{ span: 6 }} lg={{ span: 6 }} md={{ span: 12 }} sm={{ span: 12 }} xs={{ span: 24 }}>

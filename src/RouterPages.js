@@ -35,7 +35,7 @@ import { Route, Routes } from "react-router-dom";
 
 function RouterPages() {
   const matches = useMediaQuery({
-    query: '(max-width: 400px)'
+    query: '(max-width: 450px)'
   })
 
   return (
