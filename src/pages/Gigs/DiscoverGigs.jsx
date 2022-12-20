@@ -156,7 +156,16 @@ export default function DiscoverGigs() {
 									key="3"
 								>
 									<Space direction="vertical" size="middle" style={{ width: "100%" }}>
-									<Input className={css["filter__input"]}  />
+										<Select
+											aria-expanded="false"
+											className={css["customSelect"]}
+											size="large"
+											mode="tags"
+											//   onChange={handleChange}
+											style={{
+												minWidth: 220,
+											}}
+										/>
 									</Space>
 									{/* <Checkbox.Group
 										className={css["filter__checkboxes"]}
@@ -174,7 +183,15 @@ export default function DiscoverGigs() {
 									key="4"
 								>
 									<Space direction="vertical" size="middle" style={{ width: "100%" }}>
-									<Input className={css["filter__input"]}  />
+										<Select
+											className={css["customSelect"]}
+											size="large"
+											mode="tags"
+											//   onChange={handleChange}
+											style={{
+												minWidth: 220,
+											}}
+										/>
 									</Space>
 								</Panel>
 								<Panel
@@ -187,7 +204,15 @@ export default function DiscoverGigs() {
 									key="5"
 								>
 									<Space direction="vertical" size="middle" style={{ width: "100%" }}>
-									<Input className={css["filter__input"]}  />
+										<Select
+											className={css["customSelect"]}
+											size="large"
+											mode="tags"
+											//   onChange={handleChange}
+											style={{
+												minWidth: 220,
+											}}
+										/>
 									</Space>
 								</Panel>
 							</Collapse>

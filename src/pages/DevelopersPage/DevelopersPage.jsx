@@ -52,7 +52,6 @@ export default function DevelopersPage() {
 					span={24}
 					style={{
 						textAlign: "center",
-						
 					}}
 				>
 					<Col span={24}>
@@ -69,8 +68,7 @@ export default function DevelopersPage() {
 				</Col>
 
 				<Col span={24}>
-					<Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }}
-					style={{padding:"0rem 5rem"}}>
+					<Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 24 }} xl={{ span: 24 }} style={{ padding: "0rem 5rem" }}>
 						<Radio.Group
 							defaultValue="a"
 							className="radio"
@@ -175,11 +173,11 @@ export default function DevelopersPage() {
 										<Typography.Title level={5}>Coded with</Typography.Title>
 										<Select
 											size="large"
+											mode="tags"
 											//   onChange={handleChange}
 											style={{
 												minWidth: 220,
 											}}
-											options={codingLanguages}
 										/>
 									</Col>
 								</Space>
