@@ -14,7 +14,7 @@ const { Text, Title } = Typography;
 export default function UserPosts() {
 	const isMobile = useMediaQuery({
 		query: "(max-width: 450px)",
-	  });
+	});
 	return (
 		<section className="UserPosts">
 			<Row
@@ -31,12 +31,11 @@ export default function UserPosts() {
 					<Row
 						style={{
 							width: "100%",
-							
+
 							textAlign: "center",
 							justifyContent: "center",
 							marginBottom: 10,
 							marginLeft: 30,
-				
 						}}
 					>
 						<Col span={12} style={{ textAlign: "center" }}>
@@ -50,7 +49,7 @@ export default function UserPosts() {
 							<br />
 						</Col>
 
-						<Col span={1} style={{display: "flex", justifyContent: "center", alignItems: "center", width:"100px !important" }}>
+						<Col span={1} style={{ display: "flex", justifyContent: "center", alignItems: "center" }} className="questionColumn">
 							<Popover
 								placement="bottom"
 								title={
@@ -68,9 +67,8 @@ export default function UserPosts() {
 							>
 								<FloatButton
 									icon={<QuestionCircleOutlined />}
-									
 									style={{
-										width:"100px !important",
+										width: "100px !important",
 										right: 24,
 
 										position: "initial",
