@@ -1,44 +1,51 @@
 // Library Imports
 import { useState } from "react";
 import { Row, Col, Typography, Form, Input, Button, Space, Select, Upload, Image, message } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 // Pages, Components, Media & StyleSheets
-
+import toast, { Toaster } from "react-hot-toast";
 import "../JobPost/JobPost.scss";
 import css from "./AddSkills.module.scss";
 import Banner from "../../../components/Banner/Banner";
 import uploadIcon from "../../../assets/svg/uploadIcon.svg";
 import BannerImage from "../../../assets/Banners/banner3.png";
+import { useFormik } from "formik";
+import { addPost } from "../../../Api";
 
 // Library Constants
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
 
-const props = {
-	name: "file",
-	multiple: true,
-	action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-	onChange(info) {
-		const { status } = info.file;
-		if (status !== "uploading") {
-			// console.log(info.file, info.fileList);
-		}
-		if (status === "done") {
-			message.success(`${info.file.name} file uploaded successfully.`);
-		} else if (status === "error") {
-			message.error(`${info.file.name} file upload failed.`);
-		}
-	},
-	onDrop(e) {
-		// console.log("Dropped files", e.dataTransfer.files);
-	},
-};
-
 export default function AddSkills() {
 	const [value, setValue] = useState("");
-
+	const [tagValues, setTagValue] = useState([]);
+	const [toolValues, setToolValue] = useState([]);
+	console.log(value);
+	const [images, setImages] = useState([]);
+	const props = {
+		name: "file",
+		multiple: true,
+		// action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+		onChange(info) {
+			console.log(info.fileList);
+			setImages(info.fileList);
+			// const { status } = info.file;
+			// if (status !== "uploading") {
+			// 	// console.log(info.file, info.fileList);
+			// }
+			// if (status === "done") {
+			// 	message.success(`${info.file.name} file uploaded successfully.`);
+			// } else if (status === "error") {
+			// 	message.error(`${info.file.name} file upload failed.`);
+			// }
+		},
+		onDrop(e) {
+			// console.log("Dropped files", e.dataTransfer.files);
+		},
+	};
+	const navigate = useNavigate();
 	const modules = {
 		toolbar: [[{ header: [1, 2, false] }], ["bold", "italic", "underline", "link", { list: "ordered" }, { list: "bullet" }]],
 	};
@@ -53,22 +60,65 @@ export default function AddSkills() {
 		});
 	}
 
-	const codingLanguages = [
-		{ value: 1, label: "Web" },
-		{ value: 2, label: "Mobile" },
-		{ value: 3, label: "Python" },
-		{ value: 4, label: "Node" },
-		{ value: 5, label: "React" },
-	];
+	const codingLanguages = [{ value: "Web" }, { value: "Mobile" }, { value: "Python" }, { value: "Node" }, { value: "React" }];
 
 	const uploadLogo = (data) => {
 		// console.log(data);
 		// setTradeLicense(data?.fileList);
 		// console.log("tradeLicense State", tradeLicense);
 	};
+	const handleChangeSelect = (value) => {
+		console.log(value);
+		setTagValue(value);
+	};
+	const handleChangeSelectTool = (value) => {
+		console.log(value);
+		setToolValue(value);
+	};
 
+	const { values, handleChange, handleSubmit } = useFormik({
+		initialValues: {
+			title: "",
+			media: [],
+			description: "",
+			tools: [],
+			tags: [],
+		},
+		onSubmit: async (values) => {
+			try {
+				console.log(toolValues);
+				values.description = value;
+				values.tags = tagValues;
+				values.tools = toolValues;
+				values.media = images;
+				console.log(values);
+				let formData = new FormData();
+				formData.append("title", values.title);
+				formData.append("description", values.description);
+				values.media.map((ele) => {
+					console.log(ele.originFileObj);
+					formData.append("media", ele.originFileObj);
+				});
+				formData.append("tools", values.tools);
+				formData.append("tags", values.tags);
+
+				console.log(formData);
+				const data = await addPost(formData);
+				console.log(data);
+				if (data.status === 201) {
+					console.log("clicked");
+					navigate("/Home");
+				}
+			} catch (e) {
+				console.log(e);
+				toast(e?.response?.data?.message);
+			}
+		},
+	});
+	console.log(values);
 	return (
 		<section className="AddSkills">
+			<Toaster />
 			<Row justify="center" style={{ overflow: "hidden", width: "100%" }}>
 				<Col span={24} className="banner">
 					<Banner Image={BannerImage} />
@@ -115,14 +165,14 @@ export default function AddSkills() {
 										{ max: 50, message: "Too Long!" },
 									]}
 								>
-									<Input />
+									<Input name="title" onChange={handleChange} value={values.title} />
 								</Form.Item>
 							</Col>
 
 							<Col span={24} className="upload_section">
 								<Dragger {...props}>
 									<p className="ant-upload-drag-icon">
-										<Image src={uploadIcon} alt="uploadIcon" preview={false} />
+										<Image src={uploadIcon} alt="uploadIcon" name="media" preview={false} />
 									</p>
 									<p className="ant-upload-text">Drag and drop and Image or Video or Browse</p>
 									<p className="ant-upload-hint">1600x1200 or higher recommended. Max 10MB each (20MB for videos)</p>
@@ -175,7 +225,8 @@ export default function AddSkills() {
 							<Col span={24}>
 								<Form.Item
 									label="Coding Languages"
-									name="coding"
+									name="tools"
+									onChange={handleChange}
 									rules={[
 										{
 											required: true,
@@ -186,8 +237,9 @@ export default function AddSkills() {
 									<Select
 										mode="tags"
 										size="large"
+										name="tools"
+										onChange={handleChangeSelectTool}
 										placeholder="Please select"
-										defaultValue={["Web", "React"]}
 										//   onChange={handleChange}
 										style={{
 											width: "100%",
@@ -211,8 +263,10 @@ export default function AddSkills() {
 									<Select
 										mode="tags"
 										size="large"
+										name="tags"
+										onChange={handleChangeSelect}
+										value={values.tags}
 										placeholder="Please select"
-										defaultValue={["a10", "c12"]}
 										//   onChange={handleChange}
 										style={{
 											width: "100%",
@@ -235,6 +289,7 @@ export default function AddSkills() {
 									<Form.Item>
 										<Link to="/skills">
 											<Button
+												onClick={handleSubmit}
 												className="save"
 												type="primary"
 												htmlType="submit"

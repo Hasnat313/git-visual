@@ -9,9 +9,9 @@ const { Text, Title } = Typography;
 
 export default function ProjectItem({ project }) {
 	return (
-		<Card className={css["card"]} cover={<img style={{ objectFit:"cover", height:"220px", borderRadius: "10px", }} alt="Project Cover" src={project?.cover} />}>
+		<Card className={css["card"]} cover={<img style={{ objectFit: "cover", height: "220px", borderRadius: "10px" }} alt="Project Cover" src={project?.cover} />}>
 			<Meta
-			style={{marginTop:"5px"}}
+				style={{ marginTop: "5px" }}
 				avatar={<Avatar className={css["card__avatar"]} src={avatar} />}
 				title={
 					<Col span={24}>

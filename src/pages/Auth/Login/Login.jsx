@@ -4,11 +4,14 @@ import { FcGoogle } from "react-icons/fc";
 
 import "./../Auth.scss";
 import { useFormik } from "formik";
-import { userLogin } from "../../../Api";
-import { toast } from "react-hot-toast";
+import { getUser, userLogin } from "../../../Api";
+import toast, { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { getUserData } from "../../../redux/Slices/userSlice";
 const { Title, Text } = Typography;
 
 export default function Login() {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { values, handleChange, handleSubmit } = useFormik({
 		initialValues: {
@@ -24,6 +27,8 @@ export default function Login() {
 				localStorage.setItem("refresh_token", JSON.stringify(data.data.tokens.refresh.token));
 				console.log(data.data.tokens.refresh.token);
 				if (data.status === 200) {
+					dispatch(getUserData(data?.data?.user));
+					console.log(data?.data?.user);
 					console.log("clicked");
 					navigate("/");
 				}
@@ -37,6 +42,7 @@ export default function Login() {
 
 	return (
 		<Col span={24} className="background_cover" style={{ minheight: "100vh", padding: "60px 90px", overflow: "hidden" }}>
+			<Toaster />
 			<Col className="card" lg={{ span: 10 }} md={{ span: 16 }} sm={{ span: 20 }}>
 				<Row
 					style={{

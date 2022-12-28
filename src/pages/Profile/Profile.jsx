@@ -13,12 +13,19 @@ import ProfileTabs from "./Components/ProfileTabs/ProfileTabs";
 import "./Profile.scss";
 import { MenuProps, message } from "antd";
 import { Co } from "react-flags-select";
+import { useDispatch, useSelector } from "react-redux";
+import { showToast } from "../../redux/Slices/toastSlice";
+import { toast } from "react-hot-toast";
 const { Meta } = Card;
 const { Text, Title } = Typography;
 
 const { useBreakpoint } = Grid;
 
 export default function Profile() {
+	const value = useSelector((store) => store.user);
+	useEffect(() => {}, []);
+	console.log(value);
+	const dispatch = useDispatch();
 	const userProfile = profile();
 	const screens = useBreakpoint();
 
@@ -41,6 +48,14 @@ export default function Profile() {
 			appendData();
 		}
 	};
+
+	// const value1 = useSelector((store) => store.toast);
+	// console.log(value1);
+	// if (value1.isOpen) {
+	// 	console.log("Hasnat");
+	// 	alert("my name is hasnat");
+	// }
+
 	const content = (
 		<List style={{ width: "500px" }}>
 			<VirtualList data={data} height={ContainerHeight} itemHeight={47} itemKey="email" onScroll={onScroll}>
@@ -143,26 +158,26 @@ export default function Profile() {
 						<Col xl={{ span: 12 }} lg={{ span: 12 }} md={{ span: 12 }} sm={{ span: 24 }} xs={{ span: 24 }}>
 							<Space size="middle" direction="vertical" style={{ width: "100%" }}>
 								<Text>
-									<span className="name">{userProfile?.name}</span>
+									<span className="name">{value?.name}</span>
 									<span className="location">
 										&nbsp; <BiLocationPlus /> &nbsp;
-										{userProfile?.location}
+										{value?.location}
 									</span>
 								</Text>
 
-								<Text className="username">{userProfile?.userName}</Text>
+								<Text className="username">{value?.username}</Text>
 
 								<Space direction="horizontal" style={{ textAlign: "center" }} size="large">
 									<Col>
 										<Title level={4} strong style={{ margin: 0 }}>
-											{userProfile?.posts}
+											{value?.postsCount}
 										</Title>
 										<Text type="secondary">Posts</Text>
 									</Col>
 									<Popover placement="bottomRight" content={content} title="Followers">
 										<Col style={{ cursor: "pointer" }}>
 											<Title level={4} strong style={{ margin: 0 }}>
-												{userProfile?.followers}
+												{value?.followerCount}
 											</Title>
 											<Text type="secondary">Followers</Text>
 										</Col>
@@ -170,7 +185,7 @@ export default function Profile() {
 									<Popover placement="bottomRight" content={content2} style={{ width: "1000px !important" }} title="Following">
 										<Col style={{ cursor: "pointer" }}>
 											<Title level={4} strong style={{ margin: 0 }}>
-												{userProfile?.following}
+												{value?.followingCount}
 											</Title>
 											<Text type="secondary">Following</Text>
 										</Col>

@@ -32,6 +32,8 @@ import SuccessPage from "./pages/SuccessPage/SuccessPage";
 import UserPosts from "./pages/UserPosts/UserPosts";
 import { useMediaQuery } from "react-responsive";
 import { Route, Routes } from "react-router-dom";
+import Payment from "./pages/Payment";
+import FrontEndAuth from "./FrontEndAuth";
 
 function RouterPages() {
   const matches = useMediaQuery({
@@ -51,100 +53,106 @@ function RouterPages() {
 
           <Routes>
             {/* <Route path="/" element={<LandingPage />} /> */}
-            <Route path="/" element={
-              <DefaultLayout>
-                <DevelopersPage />
-              </DefaultLayout>
-            } />
-            <Route path="/home" element={
-              <DefaultLayout>
-                <DevelopersPage />
-              </DefaultLayout>
-            } />
-            <Route path="/profile" element={
-              <DefaultLayout>
-                <Profile />
-              </DefaultLayout>
-            } />
-            <Route path="/newprofile" element={
-              <DefaultLayout>
-                <CreateProfile />
-              </DefaultLayout>
-            } />
-            <Route path="/editprofile" element={
-              <DefaultLayout>
-                <EditProfile />
-              </DefaultLayout>
-            } />
-            <Route path="/jobpost" element={
-              <DefaultLayout>
-                <JobPost />
-              </DefaultLayout>
-            } />
-            <Route path="/skills" element={
-              <DefaultLayout>
-                <SkillsPage />
-              </DefaultLayout>
-            } />
-            <Route path="/discover" element={
-              <DefaultLayout>
-                <DiscoverPage />
-              </DefaultLayout>
-            } />
-            <Route path="/success" element={
-              <DefaultLayout>
-                <SuccessPage />
-              </DefaultLayout>
-            } />
-            <Route path="/pricing" element={
-              <DefaultLayout>
-                <PricingPage />
-              </DefaultLayout>
-            } />
-            <Route path="/posts" element={
-              <DefaultLayout>
-                <UserPosts />
-              </DefaultLayout>
-            } />
-            <Route path="/posts/detail/:id" element={
-              <DefaultLayout>
-                <JobDescription />
-              </DefaultLayout>
-            } />
-            <Route path="/sellers" element={
-              <DefaultLayout>
-                <DiscoverGigs />
-              </DefaultLayout>
-            } />
-            <Route path="/sellers/detail/:id" element={
-              <DefaultLayout>
-                <GigDetail />
-              </DefaultLayout>
-            } />
-            <Route path="/editskills" element={
-              <DefaultLayout>
-                <AddSkills />
-              </DefaultLayout>
-            } />
-            <Route path="/messages" element={
-              <DefaultLayout>
-                <MessagesPage />
-              </DefaultLayout>
-            } />
-            <Route path="/chat" element={
-
-              matches ?
-                <NoFooterLayout>
+            <Route element={<FrontEndAuth />}>
+              <Route path="/" element={
+                <DefaultLayout>
+                  <DevelopersPage />
+                </DefaultLayout>
+              } />
+              <Route path="/home" element={
+                <DefaultLayout>
+                  <DevelopersPage />
+                </DefaultLayout>
+              } />
+              <Route path="/profile" element={
+                <DefaultLayout>
+                  <Profile />
+                </DefaultLayout>
+              } />
+              <Route path="/newprofile" element={
+                <DefaultLayout>
+                  <CreateProfile />
+                </DefaultLayout>
+              } />
+              <Route path="/payment" element={
+                <DefaultLayout>
+                  <Payment />
+                </DefaultLayout>
+              } />
+              <Route path="/editprofile" element={
+                <DefaultLayout>
+                  <EditProfile />
+                </DefaultLayout>
+              } />
+              <Route path="/jobpost" element={
+                <DefaultLayout>
+                  <JobPost />
+                </DefaultLayout>
+              } />
+              <Route path="/skills" element={
+                <DefaultLayout>
+                  <SkillsPage />
+                </DefaultLayout>
+              } />
+              <Route path="/discover" element={
+                <DefaultLayout>
+                  <DiscoverPage />
+                </DefaultLayout>
+              } />
+              <Route path="/success" element={
+                <DefaultLayout>
+                  <SuccessPage />
+                </DefaultLayout>
+              } />
+              <Route path="/pricing" element={
+                <DefaultLayout>
+                  <PricingPage />
+                </DefaultLayout>
+              } />
+              <Route path="/posts" element={
+                <DefaultLayout>
+                  <UserPosts />
+                </DefaultLayout>
+              } />
+              <Route path="/posts/detail/:id" element={
+                <DefaultLayout>
+                  <JobDescription />
+                </DefaultLayout>
+              } />
+              <Route path="/sellers" element={
+                <DefaultLayout>
+                  <DiscoverGigs />
+                </DefaultLayout>
+              } />
+              <Route path="/sellers/detail/:id" element={
+                <DefaultLayout>
+                  <GigDetail />
+                </DefaultLayout>
+              } />
+              <Route path="/editskills" element={
+                <DefaultLayout>
+                  <AddSkills />
+                </DefaultLayout>
+              } />
+              <Route path="/messages" element={
+                <DefaultLayout>
                   <MessagesPage />
-                </NoFooterLayout> :
-                <NoFooterLayout>
-                  <ChatPage />
-                </NoFooterLayout>
+                </DefaultLayout>
+              } />
+              <Route path="/chat" element={
+
+                matches ?
+                  <NoFooterLayout>
+                    <MessagesPage />
+                  </NoFooterLayout> :
+                  <NoFooterLayout>
+                    <ChatPage />
+                  </NoFooterLayout>
 
 
 
-            } />
-
+              } />
+            </Route>
             <Route path="/auth/login" element={
               <AuthLayout>
                 <Login />

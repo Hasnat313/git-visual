@@ -1,7 +1,9 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
-import { Col, Collapse, Radio, Row, Select, Typography, Button, Space, Tooltip, Input } from "antd";
+import { Col, Collapse, Radio, Row, Select, Typography, Button, Space, Tooltip, Input, message } from "antd";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAllposts } from "../../Api";
+import { BASE_URL_IMG } from "../../Api/BASE_URL";
 import { profile } from "../../utils/data";
 
 import ProjectItem from "./../../components/ProjectItem/ProjectItem";
@@ -13,7 +15,33 @@ const { Text, Title } = Typography;
 
 export default function DiscoverPage() {
 	const userProfile = profile();
-	const [projects, setProjects] = useState(userProfile?.projects?.slice(0, 12));
+	const [projects, setProjects] = useState([]);
+	useEffect(() => {
+		const call = async () => {
+			try {
+				const data = await getAllposts();
+				console.log(data.data.results);
+				let projects = [];
+				data?.data?.results.map((ele, index) => {
+					projects.push({
+						projectName: ele.title,
+						author: "By John ",
+						cover: `${BASE_URL_IMG}/${ele.media[0]?.filePath}`,
+						logo: "",
+						likes: ele.likesCount,
+						views: ele.viewsCount,
+					});
+					console.log(projects[index].cover);
+				});
+				setProjects(projects);
+			} catch (e) {
+				console.log(e);
+				message.error(e?.response?.data?.message);
+			}
+		};
+		call();
+	}, []);
+
 	const [projectsLoaded, setProjectLoaded] = useState(false);
 	const toggleFilters = () => {
 		setFiltersShown((current) => !current);
@@ -28,11 +56,11 @@ export default function DiscoverPage() {
 	];
 	const mediaMatch = window.matchMedia("(max-width: 400px)");
 	const enterLoading = () => {
-		setProjectLoaded(true);
-		setTimeout(() => {
-			setProjectLoaded(false);
-			setProjects(userProfile?.projects);
-		}, 3000);
+		// setProjectLoaded(true);
+		// setTimeout(() => {
+		// 	setProjectLoaded(false);
+		// 	setProjects(userProfile?.projects);
+		// }, 3000);
 	};
 
 	return (
@@ -82,7 +110,7 @@ export default function DiscoverPage() {
 				</Col>
 
 				<Col span={24}>
-					<Space direction="vertical" size="middle">
+					<Space direction="vertical" size="middle" style={{ width: "100%" }}>
 						<Col span={24} xs={24}>
 							<Title level={4} xs={24}>
 								Explore projects made by community members!

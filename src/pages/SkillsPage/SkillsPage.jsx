@@ -14,6 +14,7 @@ import twitter from "../../assets/social_icons/twitter.svg";
 import { HeartOutlined, EyeOutlined } from "@ant-design/icons";
 import { Co } from "react-flags-select";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { addPost } from "../../Api";
 const { Text, Title } = Typography;
 
 function SkillsPage() {

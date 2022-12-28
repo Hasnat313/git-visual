@@ -1,27 +1,55 @@
-import { Button, Card, Col, Radio, Row, Select, Space, Typography, Input, Tooltip } from "antd";
+import { Button, Card, Col, Radio, Row, Select, Space, Typography, Input, Tooltip, message } from "antd";
 import { InfoCircleOutlined, UserOutlined } from "@ant-design/icons";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { profile } from "../../utils/data";
 
 import ProjectItem from "./../../components/ProjectItem/ProjectItem";
 import "./DevelopersPage.scss";
-
+import { getAllposts } from "../../Api";
+import { BASE_URL, BASE_URL_IMG } from "../../Api/BASE_URL";
 const { Meta } = Card;
 const { Text, Title } = Typography;
 
 export default function DevelopersPage() {
+	const [projects, setProjects] = useState([]);
+	useEffect(() => {
+		const call = async () => {
+			try {
+				const data = await getAllposts();
+				console.log(data.data.results);
+				let projects = [];
+				data?.data?.results.map((ele, index) => {
+					projects.push({
+						projectName: ele.title,
+						author: "By John ",
+						cover: `${BASE_URL_IMG}/${ele.media[0]?.filePath}`,
+						logo: "",
+						likes: ele.likesCount,
+						views: ele.viewsCount,
+					});
+					console.log(projects[index].cover);
+				});
+				setProjects(projects);
+			} catch (e) {
+				console.log(e);
+				message.error(e?.response?.data?.message);
+			}
+		};
+		call();
+	}, []);
+
 	const userProfile = profile();
-	const [projects, setProjects] = useState(userProfile?.projects?.slice(0, 12));
+
 	const [projectsLoaded, setProjectLoaded] = useState(false);
 	const [filtersShown, setFiltersShown] = useState(false);
 
 	const enterLoading = () => {
 		setProjectLoaded(true);
-		setTimeout(() => {
-			setProjectLoaded(false);
-			setProjects(userProfile?.projects);
-		}, 3000);
+		// setTimeout(() => {
+		// 	setProjectLoaded(false);
+		// 	setProjects(userProfile?.projects);
+		// }, 3000);
 	};
 	const mediaMatch = window.matchMedia("(max-width: 400px)");
 	console.log(mediaMatch);
@@ -45,6 +73,7 @@ export default function DevelopersPage() {
 				paddingBottom: "5rem",
 				paddingRight: "0rem",
 				paddingLeft: "2rem",
+				width: "100% !important",
 			}}
 		>
 			<Row gutter={[0, 70]} style={{ overflow: "hidden", width: "100%" }}>
@@ -104,7 +133,7 @@ export default function DevelopersPage() {
 				</Col>
 
 				<Col span={24} xs={24}>
-					<Space direction="vertical" size="middle" xs={24}>
+					<Space direction="vertical" size="middle" xs={24} style={{ width: "100%" }}>
 						<Col span={24} xs={24}>
 							<Title level={4} xs={24}>
 								Explore projects made by community members!
