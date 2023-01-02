@@ -36,7 +36,7 @@ const items = [
 		danger: true,
 		label: (
 			<Link
-				to="/auth/login"
+				// to="/auth/login"
 				onClick={() => {
 					localStorage.removeItem("access_token");
 					localStorage.removeItem("refresh_token");
@@ -173,9 +173,16 @@ export default function AppBar() {
 								</a>
 							</Dropdown>
 							<Divider type="vertical" />
-							<Link to="/editskills">
-								<Button className="upload-btn">Upload</Button>
-							</Link>
+
+							{JSON.parse(localStorage.getItem("access_token")) !== null ? (
+								<Link to="/editskills">
+									<Button className="upload-btn">Upload</Button>
+								</Link>
+							) : (
+								<Link to="/auth/login">
+									<Button className="upload-btn">Login</Button>
+								</Link>
+							)}
 						</Col>
 					</Space>
 				</Row>

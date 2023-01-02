@@ -178,14 +178,14 @@ export default function SignUp() {
 								</Form.Item>
 							</Col>
 						</Form>
-
+						{/* 
 						<Col span={24} style={{ textAlign: "center" }}>
 							<Space direction="vertical" style={{ width: "100%", textAlign: "-webkit-center" }}>
-								<Col span={24}>
+								{/* <Col span={24}>
 									<Divider plain>Or Sign Up with</Divider>
-								</Col>
+								</Col> */}
 
-								<Col span={8}>
+						{/* <Col span={8}>
 									<Row align="middle" justify="space-between" style={{ overflow: "hidden", width: "100%" }}>
 										<Col>
 											<FcGoogle
@@ -208,9 +208,9 @@ export default function SignUp() {
 											/>
 										</Col>
 									</Row>
-								</Col>
-							</Space>
-						</Col>
+								</Col> */}
+						{/* </Space> */}
+						{/* </Col> */}
 					</Col>
 				</Row>
 			</Col>

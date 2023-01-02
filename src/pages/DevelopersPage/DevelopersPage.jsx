@@ -7,7 +7,7 @@ import { profile } from "../../utils/data";
 import ProjectItem from "./../../components/ProjectItem/ProjectItem";
 import "./DevelopersPage.scss";
 import { getAllposts } from "../../Api";
-import { BASE_URL, BASE_URL_IMG } from "../../Api/BASE_URL";
+import { BASE_URL, BASE_URL_IMG, BASE_URL_IMG_Local } from "../../Api/BASE_URL";
 const { Meta } = Card;
 const { Text, Title } = Typography;
 

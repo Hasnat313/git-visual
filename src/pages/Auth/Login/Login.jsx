@@ -4,10 +4,11 @@ import { FcGoogle } from "react-icons/fc";
 
 import "./../Auth.scss";
 import { useFormik } from "formik";
-import { getUser, userLogin } from "../../../Api";
+import { getSubscription, getUser, userLogin } from "../../../Api";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { getUserData } from "../../../redux/Slices/userSlice";
+import { setCredits } from "../../../redux/Slices/subscriptionSlice";
 const { Title, Text } = Typography;
 
 export default function Login() {
@@ -29,6 +30,11 @@ export default function Login() {
 				if (data.status === 200) {
 					dispatch(getUserData(data?.data?.user));
 					console.log(data?.data?.user);
+					const response = await getSubscription(data?.data?.user?.id);
+					if (response?.status === 200) {
+						dispatch(setCredits({ subscription: response?.data?.subscription, credits: response?.data?.credits }));
+					}
+
 					console.log("clicked");
 					navigate("/");
 				}
@@ -58,7 +64,7 @@ export default function Login() {
 						<Text type="secondary">Develop your image</Text>
 					</Col>
 
-					<Col span={24}>
+					{/* <Col span={24}>
 						<Button className="google" block>
 							<Space>
 								<FcGoogle /> <Text>Sign in with Google</Text>
@@ -66,7 +72,7 @@ export default function Login() {
 						</Button>
 					</Col>
 
-					<Divider plain>Or</Divider>
+					<Divider plain>Or</Divider> */}
 
 					<Col span={24}>
 						<Form

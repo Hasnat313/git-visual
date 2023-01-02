@@ -1,7 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 import React, { useState } from "react";
-import { BASE_URL } from "../../Api/BASE_URL";
+import { BASE_URL, BASE_URL_Local } from "../../Api/BASE_URL";
 
 const CARD_OPTIONS = {
 	iconStyle: "solid",
@@ -37,22 +37,24 @@ export default function PaymentForm() {
 
 		if (!error) {
 			try {
-				const { id } = paymentMethod;
-				console.log(id);
+				// const { id } = paymentMethod;
+				// console.log(id);
+
 				const response = await axios.post(
 					`${BASE_URL}/subscriptions/pay`,
 					{
 						packageType: "starter",
-						successUrl: "http://localhost:3000/chk",
-						cancelUrl: "http://localhost:3000/check",
+						successUrl: "http://localhost:3001/success",
+						cancelUrl: "http://localhost:3001/check",
 					},
 					{
 						headers: {
+							// Authorization: `Bearer ${id}`,
 							Authorization: `Bearer ${JSON.parse(localStorage.getItem("access_token"))}`,
 						},
 					}
 				);
-
+				console.log(response);
 				if (response.data.success) {
 					console.log("Successful payment");
 					setSuccess(true);

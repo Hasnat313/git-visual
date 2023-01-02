@@ -1,7 +1,7 @@
 // Library Imports
 import { useState } from "react";
-import { Row, Col, Typography, Form, Input, Button, Space, Select, Upload } from "antd";
-import { Link } from "react-router-dom";
+import { Row, Col, Typography, Form, Input, Button, Space, Select, Upload, message } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 
 // Pages, Components, Media & StyleSheets
@@ -9,17 +9,21 @@ import ReactQuill from "react-quill";
 import "./JobPost.scss";
 import Banner from "../../../components/Banner/Banner";
 import BannerImage from "../../../assets/Banners/banner3.png";
+import { useFormik } from "formik";
+import { addJob } from "../../../Api";
 
 // Library Constants
 const { Text, Title } = Typography;
 
 export default function JobPost() {
 	const [value, setValue] = useState(" ");
-
+	const navigate = useNavigate();
 	const modules = {
 		toolbar: [[{ header: [1, 2, false] }], ["bold", "italic", "underline"]],
 	};
-
+	const [tags, setTags] = useState([]);
+	const [logo, setLogo] = useState();
+	const [workplaceType, setWorkPlaceType] = useState("");
 	const formats = ["header", "bold", "italic", "underline"];
 
 	const options = [];
@@ -31,11 +35,65 @@ export default function JobPost() {
 	}
 
 	const uploadLogo = (data) => {
-		// console.log(data);
+		console.log(data.file);
+		setLogo(data.file);
 		// setTradeLicense(data?.fileList);
 		// console.log("tradeLicense State", tradeLicense);
 	};
+	const handleChangeTags = (value) => {
+		setTags(value);
+	};
+	const handleSelectChange = (value) => {
+		// console.log(value);
+		setWorkPlaceType(value);
+	};
+	const { values, handleChange, handleSubmit } = useFormik({
+		initialValues: {
+			title: "",
+			experience: "",
+			employmentType: "",
+			link: "",
+			companyName: "",
+			companyLogo: "",
+			companyWebsite: "",
+			workplaceType: "",
+			description: "",
+			tags: [],
+		},
+		onSubmit: async (values) => {
+			try {
+				// console.log(toolValues);
+				values.description = value;
+				values.tags = tags;
+				// values.companyLogo = logo;
+				values.workplaceType = workplaceType;
+				console.log(values);
+				let formData = new FormData();
+				formData.append("title", values.title);
+				formData.append("description", values.description);
+				formData.append("companyLogo", logo);
+				formData.append("experience", values.experience);
+				formData.append("employmentType", values.employmentType);
+				formData.append("link", values.link);
+				formData.append("companyName", values.companyName);
+				formData.append("companyWebsite", values.companyWebsite);
+				formData.append("workplaceType", workplaceType);
+				formData.append("tags", values.tags);
 
+				// console.log(formData);
+				const data = await addJob(formData);
+				console.log(data);
+				if (data.status === 201) {
+					console.log("clicked");
+					navigate("/posts");
+				}
+			} catch (e) {
+				console.log(e);
+				message.error(e?.response?.data?.message);
+			}
+		},
+	});
+	console.log(values);
 	return (
 		<Col className="JobPost" span={24}>
 			<Row justify="center" style={{ overflow: "hidden", width: "100%" }}>
@@ -81,7 +139,7 @@ export default function JobPost() {
 										{ max: 50, message: "Too Long!" },
 									]}
 								>
-									<Input />
+									<Input name="title" values={values.title} onChange={handleChange} />
 								</Form.Item>
 							</Col>
 
@@ -138,6 +196,8 @@ export default function JobPost() {
 								<Form.Item
 									label="Workplace Type"
 									name="workplaceType"
+									value={values.workplaceType}
+									onChange={handleChange}
 									rules={[
 										{
 											required: true,
@@ -145,7 +205,7 @@ export default function JobPost() {
 										},
 									]}
 								>
-									<Select>
+									<Select name="workplaceType" onChange={handleSelectChange}>
 										<Select.Option value="permanent">Permanent</Select.Option>
 										<Select.Option value="contract">Contract</Select.Option>
 										<Select.Option value="freelance">Freelance</Select.Option>
@@ -165,7 +225,7 @@ export default function JobPost() {
 										},
 									]}
 								>
-									<Input />
+									<Input name="experience" values={values.experience} onChange={handleChange} />
 								</Form.Item>
 							</Col>
 
@@ -180,7 +240,7 @@ export default function JobPost() {
 										},
 									]}
 								>
-									<Input />
+									<Input name="employmentType" values={values.employmentType} onChange={handleChange} />
 								</Form.Item>
 							</Col>
 
@@ -195,7 +255,7 @@ export default function JobPost() {
 										},
 									]}
 								>
-									<Input />
+									<Input name="link" values={values.link} onChange={handleChange} />
 								</Form.Item>
 							</Col>
 
@@ -212,7 +272,7 @@ export default function JobPost() {
 											},
 										]}
 									>
-										<Input />
+										<Input name="companyName" values={values.companyName} onChange={handleChange} />
 									</Form.Item>
 								</Col>
 
@@ -261,7 +321,7 @@ export default function JobPost() {
 											},
 										]}
 									>
-										<Input />
+										<Input name="companyWebsite" values={values.companyWebsite} onChange={handleChange} />
 									</Form.Item>
 								</Col>
 							</Col>
@@ -282,7 +342,7 @@ export default function JobPost() {
 										mode="tags"
 										size="large"
 										placeholder="Please select"
-										defaultValue={["a10", "c12"]}
+										onChange={handleChangeTags}
 										//   onChange={handleChange}
 										style={{
 											width: "100%",
@@ -304,6 +364,7 @@ export default function JobPost() {
 
 									<Form.Item>
 										<Button
+											onClick={handleSubmit}
 											type="primary"
 											className="save"
 											htmlType="submit"

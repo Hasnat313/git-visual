@@ -7,11 +7,11 @@ import { EditOutlined } from "@ant-design/icons";
 import user from "./../../../assets/Profile Images/profile_pic.png";
 import css from "./JobCard.module.scss";
 import { useNavigate } from "react-router-dom";
-
+import Parser from "html-react-parser";
 const { Panel } = Collapse;
 const { Text, Title, Paragraph } = Typography;
 
-export default function JobCard() {
+export default function JobCard({ data }) {
 	const navigate = useNavigate();
 	const [editableStr, setEditableStr] = useState(
 		"Officia duis ad esse pariatur duis esse. Sit occaecat culpa sint eiusmod. Est magna eiusmod ullamco ut incididunt incididunt do amet labore. Irure nulla ea nulla aliqua commodo. Nisi consequat labore eu sint consequat enim pariatur dolore ea aliqua exercitation."
@@ -22,12 +22,12 @@ export default function JobCard() {
 
 	const jobData = {
 		id: 1,
-		name: "Art Director",
-		job_type: "Permanent",
+		name: data?.title,
+		job_type: data?.workplaceType,
 		designation: "wizards of the coast",
 		location: "Tokyo, Japan",
-		description:
-			"Officia duis ad esse pariatur duis esse. Sit occaecat culpa sint eiusmod. Est magna eiusmod ullamco ut incididunt incididunt do amet labore. Irure nulla ea nulla aliqua commodo. Nisi consequat labore eu sint consequat enim pariatur dolore ea aliqua exercitation.",
+		description: data?.description,
+		// "Officia duis ad esse pariatur duis esse. Sit occaecat culpa sint eiusmod. Est magna eiusmod ullamco ut incididunt incididunt do amet labore. Irure nulla ea nulla aliqua commodo. Nisi consequat labore eu sint consequat enim pariatur dolore ea aliqua exercitation.",
 	};
 
 	return (
@@ -99,10 +99,7 @@ export default function JobCard() {
 				<Title level={5} style={{ color: "white" }}>
 					Description
 				</Title>
-				<Paragraph className={css["job__description"]}>
-					{editableStr}
-					{/* {jobData.description} */}
-				</Paragraph>
+				<Paragraph className={css["job__description"]}>{Parser(jobData.description)}</Paragraph>
 			</Col>
 		</Row>
 	);

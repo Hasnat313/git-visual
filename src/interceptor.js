@@ -4,7 +4,7 @@ import axios, {
     AxiosRequestConfig,
     AxiosResponse,
 } from "axios";
-import { BASE_URL } from "./Api/BASE_URL";
+import { BASE_URL, BASE_URL_Local } from "./Api/BASE_URL";
 
 
 // const API_URL = process.env.NEXT_PUBLIC_ENDPOINT_AUTH;
@@ -33,16 +33,18 @@ const onResponseError = async (error) => {
             error.response.data.code === 401 &&
             error.response.data.message === "Please authenticate"
         ) {
-            const storedToken = JSON.parse(localStorage.getItem("refresh_token"));
-
+            let storedToken = JSON.parse(localStorage.getItem("refresh_token"));
+            // storedToken = storedToken === null && ""
+            console.log(storedToken);
             try {
                 const { data } = await axios.post(`${BASE_URL}/auth/refresh-tokens`, {
                     refreshToken: storedToken,
                 });
-                // console.log(rs);
+                console.log(data);
 
-                const { token } = data;
-                console.log(token);
+                const { access } = data;
+                const { token } = access
+                // console.log(access.token);
                 localStorage.setItem("access_token", JSON.stringify(token));
                 // localStorage.setItem("userData", JSON.stringify(user));
                 const prevRequest = error?.config;

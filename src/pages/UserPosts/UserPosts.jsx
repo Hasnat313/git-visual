@@ -8,10 +8,28 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import JobCard from "./Components/JobCard";
 import user from "../../assets/Profile Images/profile_pic.png";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getJobs } from "../../Api";
 
 const { Text, Title } = Typography;
 
 export default function UserPosts() {
+	const data = useSelector((store) => store.subscription);
+	const [results, setResults] = useState([]);
+	useEffect(() => {
+		const call = async () => {
+			try {
+				const response = await getJobs();
+				setResults(response.data.results);
+				console.log(response);
+			} catch (e) {
+				console.log(e);
+			}
+		};
+		call();
+	}, []);
+	console.log(results);
 	const isMobile = useMediaQuery({
 		query: "(max-width: 450px)",
 	});
@@ -54,7 +72,7 @@ export default function UserPosts() {
 								placement="bottom"
 								title={
 									<Title level={5} style={{ textAlign: "center" }}>
-										Post Credits: 2
+										Post Credits: {data?.credits}
 									</Title>
 								}
 								content={
@@ -91,7 +109,16 @@ export default function UserPosts() {
 				gutter={[5, 0]}
 			>
 				<Col xs={22} sm={22} md={20} lg={17} xl={17}>
-					<Link to="/posts/detail/1">
+					{results.map((ele) => (
+						<>
+							<Link to="/posts/detail/1">
+								<JobCard data={ele} />
+							</Link>
+							<br />
+						</>
+					))}
+
+					{/* <Link to="/posts/detail/1">
 						<JobCard />
 					</Link>
 					<br />
@@ -101,11 +128,7 @@ export default function UserPosts() {
 					<br />
 					<Link to="/posts/detail/1">
 						<JobCard />
-					</Link>
-					<br />
-					<Link to="/posts/detail/1">
-						<JobCard />
-					</Link>
+					</Link> */}
 				</Col>
 			</Row>
 		</section>

@@ -10,6 +10,7 @@ import { createStateSyncMiddleware } from "redux-state-sync";
 import persistCombineReducers from "redux-persist/es/persistCombineReducers";
 import { ConfigureStoreOptions } from "@reduxjs/toolkit";
 import userReducer from "./Slices/userSlice";
+import subscriptionReducer from "./Slices/subscriptionSlice";
 import toastReducer from "./Slices/toastSlice";
 import { persistReducer, persistStore } from "redux-persist";
 // ⬇ Slices Imports
@@ -32,6 +33,7 @@ const persistConfig = {
 const persistedReducer = persistCombineReducers(persistConfig, {
 	user: userReducer,
 	toast: toastReducer,
+	subscription: subscriptionReducer,
 	//   passwordSlice: passwordReducer,
 	//   accountSlice: accountReducer,
 	//   wishListSlice: wishListReducer,

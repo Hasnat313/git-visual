@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "./BASE_URL";
+import { BASE_URL, BASE_URL_Local } from "./BASE_URL";
 import { setupInterceptorsTo } from "../interceptor.js"
 
 const API = setupInterceptorsTo(
@@ -35,3 +35,23 @@ export const getAllposts = () => API.get(`/posts`);
 export const deletePost = () => API.get(`/posts`);
 export const viewPost = (id) => API.get(`/posts/view/${id}`);
 export const likePost = (id) => API.get(`/posts/like/${id}`);
+
+/*subscription*/
+
+export const purchase = (data) => API.post(`/subscriptions/pay`, data);
+export const subscribe = (id) => API.get(`/subscriptions/subscribe?sessionId=${id}`);
+export const getSubscription = (id) => API.get(`/subscriptions/user/${id}`);
+
+
+/*jobs*/
+
+export const addJob = (data) => API.post(`/jobs`, data);
+export const getJobs = () => API.get(`/jobs`);
+
+/*conversations*/
+
+export const newConversation = (data) => API.post(`/conversations/init`, data);
+export const getMessagesInConversation = (id) => API.get(`/conversations/messages/?conversationId=${id}`);
+export const newMessage = (data) => API.post(`/conversations/messages`, data);
+export const readMessage = (data) => API.post(`/conversations/messages/read`, data);
+

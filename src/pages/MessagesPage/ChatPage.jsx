@@ -9,15 +9,26 @@ import MsgIcon from "./img/msg.svg";
 import MessagesItem from "./Components/MessageItem/MessagesItem";
 import UserItem from "./Components/UserItem/UserItem";
 import WriteMessage from "./Components/WriteMessage/WriteMessage";
-
+import io from "socket.io-client";
 import { users } from "./chatList";
 import { messages } from "./messagesList";
+import { BASE_URL_SOCKET, BASE_URL_SOCKET_LOCAL } from "../../Api/BASE_URL";
 
 const { Text, Title } = Typography;
 const { Header, Sider, Content, Footer } = Layout;
 
 const ChatPage = () => {
 	const [collapsed, setCollapsed] = useState(false);
+	useEffect(() => {
+		const socket = io(BASE_URL_SOCKET_LOCAL, { query: { token: JSON.parse(localStorage.getItem("access_token")) } });
+		console.log(socket.connected);
+		socket.on("connection", () => {
+			console.log("connected");
+		});
+		socket.emit("typing", () => {
+			console.log("connected");
+		});
+	}, []);
 
 	const [isTablet, setTsTablet] = useState(
 		useMediaQuery({
@@ -59,7 +70,7 @@ const ChatPage = () => {
 
 						<Input className="search-msg" prefix={<SearchOutlined />} placeholder=" Search..." size="large" />
 
-						<List dataSource={users.slice(0, 2)} renderItem={(user) => <UserItem user={user} />} />
+						{/* <List dataSource={users.slice(0, 2)} renderItem={(user) => <UserItem user={user} />} /> */}
 
 						<Divider plain orientation="left" orientationMargin="0" style={{ color: "white", margin: "0px" }}>
 							<img src={MsgIcon} alt="Message" />{" "}
@@ -72,7 +83,7 @@ const ChatPage = () => {
 						<div
 							id="scrollableDiv"
 							style={{
-								height: 326,
+								height: 380,
 								overflow: "auto",
 							}}
 						>
