@@ -3,13 +3,22 @@ import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
 
 import avatar from "./Avatar.png";
 import css from "./ProjectItem.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const { Meta } = Card;
 const { Text, Title } = Typography;
 
 export default function ProjectItem({ project }) {
+	const navigate = useNavigate();
 	return (
-		<Card className={css["card"]} cover={<img style={{ objectFit: "cover", height: "220px", borderRadius: "10px" }} alt="Project Cover" src={project?.cover} />}>
+		<Card
+			onClick={() => {
+				navigate("/skills");
+				console.log("Dd");
+			}}
+			className={css["card"]}
+			cover={<img style={{ objectFit: "cover", height: "220px", borderRadius: "10px" }} alt="Project Cover" src={project?.cover} />}
+		>
 			<Meta
 				style={{ marginTop: "5px" }}
 				avatar={<Avatar className={css["card__avatar"]} src={avatar} />}

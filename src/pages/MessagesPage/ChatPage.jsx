@@ -1,4 +1,4 @@
-import { Avatar, Col, Divider, Input, Layout, List, Space, Typography } from "antd";
+import { Avatar, Button, Col, Divider, Input, Layout, List, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
@@ -13,22 +13,52 @@ import io from "socket.io-client";
 import { users } from "./chatList";
 import { messages } from "./messagesList";
 import { BASE_URL_SOCKET, BASE_URL_SOCKET_LOCAL } from "../../Api/BASE_URL";
+import { getMessagesInConversation, getUser, newConversation, newMessage } from "../../Api";
 
 const { Text, Title } = Typography;
 const { Header, Sider, Content, Footer } = Layout;
 
 const ChatPage = () => {
 	const [collapsed, setCollapsed] = useState(false);
+	const [message, setMessage] = useState("");
 	useEffect(() => {
-		const socket = io(BASE_URL_SOCKET_LOCAL, { query: { token: JSON.parse(localStorage.getItem("access_token")) } });
+		const call = async () => {
+			const response5 = getMessagesInConversation("63b423638feed135b8deb998");
+			console.log(response5.data);
+
+			const data = await getUser("63b1b478a6b22623c8182018");
+			console.log(data.data);
+			// const response = await getUser("63b2c337420b780e487b49f1");
+			// console.log(response.data);
+		};
+		call();
+		const socket = io(BASE_URL_SOCKET, { query: { token: JSON.parse(localStorage.getItem("access_token")) } });
 		console.log(socket.connected);
-		socket.on("connection", () => {
+		const call2 = async () => {
 			console.log("connected");
-		});
+			const response = await getUser("63b2c337420b780e487b49f1");
+			console.log(response.data);
+
+			// const response2 = await newConversation({ receiverId: "63b1b478a6b22623c8182018" });
+			// console.log(response2.data);
+		};
+		call2();
 		socket.emit("typing", () => {
 			console.log("connected");
 		});
+		socket.on("newMessage", (data) => {
+			console.log(data);
+		});
 	}, []);
+	const handleChange = (e) => {
+		console.log(e);
+		setMessage(e);
+	};
+
+	const handleClick = async () => {
+		const response3 = await newMessage({ conversationId: "63b423638feed135b8deb998", receiver: "63b1b478a6b22623c8182018", messageType: "text", text: message });
+		console.log(response3);
+	};
 
 	const [isTablet, setTsTablet] = useState(
 		useMediaQuery({
@@ -135,7 +165,8 @@ const ChatPage = () => {
 					>
 						<Col span={24} className="messageArea">
 							<Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 22 }} lg={{ span: 14 }} xl={{ span: 14 }} style={{ padding: "10px" }}>
-								<WriteMessage />
+								<WriteMessage onChange={handleChange} />
+								<Button onClick={handleClick}>Send</Button>
 							</Col>
 						</Col>
 					</Footer>

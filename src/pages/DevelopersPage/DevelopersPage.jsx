@@ -8,10 +8,12 @@ import ProjectItem from "./../../components/ProjectItem/ProjectItem";
 import "./DevelopersPage.scss";
 import { getAllposts } from "../../Api";
 import { BASE_URL, BASE_URL_IMG, BASE_URL_IMG_Local } from "../../Api/BASE_URL";
+import { useNavigate } from "react-router-dom";
 const { Meta } = Card;
 const { Text, Title } = Typography;
 
 export default function DevelopersPage() {
+	const navigate = useNavigate();
 	const [projects, setProjects] = useState([]);
 	useEffect(() => {
 		const call = async () => {
@@ -190,12 +192,10 @@ export default function DevelopersPage() {
 										<Select
 											mode="tags"
 											size="large"
-											defaultValue={["Web", "React"]}
 											//   onChange={handleChange}
 											style={{
 												minWidth: 220,
 											}}
-											options={codingLanguages}
 										/>
 									</Col>
 									<Col>
@@ -207,6 +207,8 @@ export default function DevelopersPage() {
 											style={{
 												minWidth: 220,
 											}}
+											defaultValue={["Web", "React"]}
+											options={codingLanguages}
 										/>
 									</Col>
 								</Space>
@@ -217,7 +219,13 @@ export default function DevelopersPage() {
 							{projects.map((project, key) => {
 								return (
 									<Col key={key} xl={{ span: 6 }} lg={{ span: 6 }} md={{ span: 12 }} sm={{ span: 12 }} xs={{ span: 24 }}>
-										<ProjectItem project={project} />
+										<ProjectItem
+											project={project}
+											onClick={() => {
+												console.log("ddd");
+												navigate("/skills");
+											}}
+										/>
 									</Col>
 								);
 							})}
